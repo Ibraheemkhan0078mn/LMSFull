@@ -2,8 +2,7 @@
 node_modules/
 **/node_modules/
 
-# Ignore build output for the React app
-server/client/build/
+
 
 # Ignore logs
 *.log
