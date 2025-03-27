@@ -6,7 +6,7 @@ dotenv.config()
 
 async function dbConnection (){
     try{
-        mongoose.connect(process.env.mongodbUri)
+        mongoose.connect(process.env.mongodbUri+"/LMS")
         .then((response)=>{
             console.log("Mongodb is connected")
         })
