@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import MyContext from '../context api/MyContext'
 import Loader from '../components/Loader'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -32,7 +33,7 @@ const StudentRegistration = () => {
 
 
   let [formData, setFormData] = useState({
-    studentProfileImage:"",
+    studentProfileImage: "",
     username: "",
     email: "",
     phoneNo: "",
@@ -101,16 +102,28 @@ const StudentRegistration = () => {
 
     try {
 
-      let formDataToSend= new FormData()
+      let formDataToSend = new FormData()
 
-      for (let key in formData){
+      for (let key in formData) {
         formDataToSend.append(key, formData[key])
       }
 
 
 
 
-      let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/Registration", formDataToSend, { withCredentials: true })
+      // let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/Registration", formDataToSend, { withCredentials: true })
+
+      let method = "post"
+      let url = `/api/v1/StudentRoutes/Registration`
+      let data = formDataToSend
+
+      let response = await axiosReqFunc(method, url, data)
+
+
+
+
+
+      
 
       if (response.data) {
 
@@ -240,7 +253,7 @@ const StudentRegistration = () => {
               className='custom_glassy_effect    h-full w-full rounded-lg px-5 text-base outline-none border-none text-zinc-600 font-semibold'
               name='studentProfileImage'
               onChange={handleChange}
-              // required
+            // required
             />
 
           </label>

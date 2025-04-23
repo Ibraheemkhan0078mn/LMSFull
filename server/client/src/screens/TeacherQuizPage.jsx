@@ -9,6 +9,8 @@ import MyContext from '../context api/MyContext'
 import QuizQuestionDisplayComp from '../components/QuizQuestionDisplayComp.jsx'
 import { useNavigate } from 'react-router-dom'
 import QuestionCreationForm from '../components/QuestionCreationForm.jsx'
+import { axiosReqFunc } from '../Api/axiosReqFunction.jsx'
+import { rule } from 'postcss'
 
 
 
@@ -90,10 +92,15 @@ const TeacherQuizPage = () => {
 
                 async function quizQuestionFetch() {
 
-                    let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getCourseQuizQuestions",
-                        { currentClickedCourseId: currentClickedCourseData._id },
-                        { withCredentials: true })
+                    // let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getCourseQuizQuestions",
+                    //     { currentClickedCourseId: currentClickedCourseData._id },
+                    //     { withCredentials: true })
 
+                        let method= "post"
+                        let url=`/api/v1/TeacherRoutes/getCourseQuizQuestions`
+                        let data= { currentClickedCourseId: currentClickedCourseData._id }
+
+                        let response= await axiosReqFunc(method, url, data)
 
                     if (response.data) {
                         if (response.data.quizQuestionArray) {

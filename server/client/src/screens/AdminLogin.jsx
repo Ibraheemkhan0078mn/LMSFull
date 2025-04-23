@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import MyContext from '../context api/MyContext'
 import Loader from '../components/Loader'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -87,8 +88,10 @@ const AdminLogin = () => {
     try {
 
 
-      let response = await axios.post(`${import.meta.env.VITE_backend_base_Url}/api/v1/AdminRoutes/Login`, formData, { withCredentials: true })
+      // let response = await axios.post(`${import.meta.env.VITE_backend_base_Url}/api/v1/AdminRoutes/Login`, formData, { withCredentials: true })
 
+
+      let response= await axiosReqFunc("post", `/api/v1/AdminRoutes/Login`, formData)
 
       if (response.data) {
 

@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import axios from 'axios'
 import MyContext from '../context api/MyContext'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -129,14 +130,27 @@ const Navbar = () => {
 
             if (mainRole == "teacher") {
 
-                let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/Logout", { withCredentials: true })
+                // let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/Logout", { withCredentials: true })
+              let method= "get"
+              let url= `/api/v1/TeacherRoutes/Logout`
+              let data= null
+              let response= await axiosReqFunc(method, url, data)
+
                 if (response.data) {
                     alert("Successfully logout!")
                     navigate("/")
                 }
 
             } else if (mainRole == "student") {
-                let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/Logout", { withCredentials: true })
+                // let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/Logout", { withCredentials: true })
+               
+                let method= "get"
+                let url= `/api/v1/StudentRoutes/Logout`
+                let data= null
+                let response= await axiosReqFunc(method, url, data)
+
+                
+
                 if (response.data) {
                     alert("Successfully logout@")
                     navigate("/")
@@ -308,4 +322,4 @@ const Navbar = () => {
 
 
 
-export default Navbar
+export default React.memo(Navbar)

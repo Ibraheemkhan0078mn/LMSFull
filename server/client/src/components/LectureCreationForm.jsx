@@ -4,6 +4,7 @@ import { useState, useContext, useEffect } from 'react'
 import MyContext from '../context api/MyContext'
 import axios from 'axios'
 import Loader from './Loader'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 const LectureCreationForm = () => {
 
@@ -52,11 +53,19 @@ const LectureCreationForm = () => {
                 formDataToSend.append(key, formData[key])
             }
 
-            let response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/TeacherRoutes/createLecture", formDataToSend, {
-                onUploadProgress: (progressEvent) => {
-                    console.log(progressEvent)
-                }
-            })
+            // let response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/TeacherRoutes/createLecture", formDataToSend, {
+            //     onUploadProgress: (progressEvent) => {
+            //         console.log(progressEvent)
+            //     }
+            // })
+
+
+
+            let method= "post";
+            let url= `/api/v1/TeacherRoutes/createLecture`
+            let data= formDataToSend
+
+            let response= await axiosReqFunc(method, url, data)
 
 
 
@@ -337,4 +346,4 @@ const LectureCreationForm = () => {
     )
 }
 
-export default LectureCreationForm
+export default React.memo(LectureCreationForm)

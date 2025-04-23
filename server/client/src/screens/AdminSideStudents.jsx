@@ -3,12 +3,13 @@ import bgcImage from '../assets/bgcImage6.jpeg'
 import AdminNavbar from '../components/AdminNavbar'
 import MyContext from '../context api/MyContext'
 import axios from 'axios'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 const AdminSideStudents = () => {
 
 
 
-    let { allStudentsdata, 
+    let { allStudentsdata,
         setMainRole,
         setAllStudentsdata } = useContext(MyContext)
 
@@ -40,7 +41,16 @@ const AdminSideStudents = () => {
     useEffect(() => {
         async function fetchAllStudentsData() {
 
-            let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/getAllStudentsData")
+            // let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/getAllStudentsData")
+
+            let method = "get"
+            let url = `/api/v1/StudentRoutes/getAllStudentsData`
+            let data = null
+
+            let response = await axiosReqFunc(method, url, data)
+
+
+            
 
             if (response.data?.status == "success") {
                 console.log(response.data.AllStudentsData)

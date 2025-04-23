@@ -71,4 +71,4 @@ const Certificate = ({certificateData}) => {
   )
 }
 
-export default Certificate
+export default React.memo(Certificate)

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import MyContext from '../context api/MyContext'
 import Loader from '../components/Loader.jsx'
+import { axiosReqFunc } from '../Api/axiosReqFunction.jsx'
 
 
 
@@ -26,7 +27,7 @@ const TeacherRegistration = () => {
   } = useContext(MyContext)
 
 
-  let [laoder, setLoader] = useState(null)
+  let [laoder, setLoader] = useState("none")
   let [formData, setFormData] = useState({
     teacherProfileImage: "",
     username: "",
@@ -108,8 +109,7 @@ const TeacherRegistration = () => {
 
 
     try {
-      // console.log(import.meta.env.VITE_backend_base_Url)
-      // console.log(formData)
+
 
 
       let formDataToUpload = new FormData()
@@ -122,7 +122,18 @@ const TeacherRegistration = () => {
  
 
 
-      let response = await axios.post(`${import.meta.env.VITE_backend_base_Url}/api/v1/TeacherRoutes/Registration`, formDataToUpload, { withCredentials: true })
+      // let response = await axios.post(`${import.meta.env.VITE_backend_base_Url}/api/v1/TeacherRoutes/Registration`, formDataToUpload, { withCredentials: true })
+   
+      let method= "post";
+      let url = "/api/v1/TeacherRoutes/Registration";
+      let data= formDataToUpload;
+
+      console.log(method, url)
+      let response= await axiosReqFunc(method, url, data)
+   
+
+
+
       if (response.data) {
         console.log(response.data)
         setLoader(null)   //  to make the loader hide
@@ -136,8 +147,10 @@ const TeacherRegistration = () => {
         }
       }
 
+
     } catch (err) {
-      console.log("from try and catch of submit function of TeacherRegistration", err)
+      setLoader("none")
+      console.log("From try and catch of submit function of TeacherRegistration", err)
     }
 
 
@@ -437,10 +450,14 @@ const TeacherRegistration = () => {
 
 
             {
-              laoder ?
+              laoder =="visible"?
+
                 <div className="absolute right-[30%] top-3">
                   <Loader hw={20} />
-                </div> :
+                </div> 
+                
+                :
+
                 null
             }
 

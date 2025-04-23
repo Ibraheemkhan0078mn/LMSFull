@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import MyContext from '../context api/MyContext'
 import Loader from '../components/Loader'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -112,7 +113,14 @@ const StudentLogin = () => {
 
         try{
 
-            let response= await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/StudentRoutes/Login", formData, {withCredentials:true})
+            // let response= await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/StudentRoutes/Login", formData, {withCredentials:true})
+          
+            let method= "post"
+            let url = `/api/v1/StudentRoutes/Login`
+            let data= formData
+
+            let response= await axiosReqFunc(method, url, data)
+          
             if(response.data){
 
                 setLoader(null)    // to make the laoder hide when response is reached

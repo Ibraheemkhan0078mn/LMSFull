@@ -121,4 +121,4 @@ const VideoAndInfo = () => {
   )
 }
 
-export default VideoAndInfo
+export default React.memo(VideoAndInfo)

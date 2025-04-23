@@ -4,6 +4,7 @@ import axios from 'axios'
 import 'remixicon/fonts/remixicon.css'
 import { useNavigate } from 'react-router-dom'
 import Loader from './Loader'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -67,7 +68,17 @@ const LectureList = ({ mode }) => {
 
             setMarkAsCompleteLoaderDisplay("visible")
 
-            let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/markAsCompleteLecture", { lectureId: lectureData._id }, { withCredentials: true })
+            // let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/markAsCompleteLecture", { lectureId: lectureData._id }, { withCredentials: true })
+
+
+            let method= "post"
+            let url= `/api/v1/StudentRoutes/markAsCompleteLecture`
+            let data= { lectureId: lectureData._id }
+
+            let response= await axiosReqFunc(method, url, data)
+
+
+
 
             if (response.data) {
                 setMarkAsCompleteLoaderDisplay(null)
@@ -99,7 +110,11 @@ const LectureList = ({ mode }) => {
     async function handleRemoveCompletionMark(lectureId) {
 
         try {
-            let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/removeLectureId", { lectureId }, { withCredentials: true })
+            // let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/removeLectureId", { lectureId }, { withCredentials: true })
+           
+
+            let response= await axiosReqFunc("post", `/api/v1/StudentRoutes/removeLectureId`,  { lectureId })
+           
             if (response.data) {
                 // console.log(response.data)
                 setCompletedLecturesIdsArray(response.data.completedLectureids)
@@ -375,4 +390,4 @@ const LectureList = ({ mode }) => {
     )
 }
 
-export default LectureList
+export default React.memo(LectureList)

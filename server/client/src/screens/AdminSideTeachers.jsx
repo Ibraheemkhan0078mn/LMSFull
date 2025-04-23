@@ -3,6 +3,7 @@ import AdminNavbar from '../components/AdminNavbar'
 import bgcImage from '../assets/bgcImage6.jpeg'
 import MyContext from '../context api/MyContext'
 import axios from 'axios'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 const AdminSideTeachers = () => {
@@ -10,7 +11,7 @@ const AdminSideTeachers = () => {
 
 
 
-    let { allTeacherdata, 
+    let { allTeacherdata,
         setMainRole,
         setAllTeacherdata } = useContext(MyContext)
 
@@ -46,8 +47,18 @@ const AdminSideTeachers = () => {
     useEffect(() => {
         async function fetchAllTeacherData() {
 
-            let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getAllTeachersData")
+            // let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getAllTeachersData")
 
+            let method = "get"
+            let url = `/api/v1/TeacherRoutes/getAllTeachersData`
+            let data = null
+
+            let response = await axiosReqFunc(method, url, data)
+
+
+
+
+            
             if (response.data?.status == "success") {
                 console.log(response.data.allTeacherData)
                 setAllTeacherdata(response.data.allTeacherData)

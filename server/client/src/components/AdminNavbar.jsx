@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { gsap } from 'gsap'
 import axios from 'axios'
 import MyContext from '../context api/MyContext'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -53,7 +54,14 @@ const AdminNavbar = () => {
     async function handleLogoutIconClick() {
         try {
 
-            let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/AdminRoutes/Logout", { withCredentials: true })
+            // let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/AdminRoutes/Logout", { withCredentials: true })
+
+            let method= "get";
+            let url = `/api/v1/AdminRoutes/Logout`
+            let data= null;
+            let response= await axiosReqFunc(method,url, data)
+
+
 
             if (response.data) {
 
@@ -268,4 +276,4 @@ const AdminNavbar = () => {
 
 
 
-export default AdminNavbar
+export default React.memo(AdminNavbar)

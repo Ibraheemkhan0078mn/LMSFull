@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import MyContext from '../context api/MyContext'
 import Loader from '../components/Loader'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -20,7 +21,7 @@ const TeacherLogin = () => {
   let navigate = useNavigate()
   let { setCurrentRenderedPage,
     setMainRole
-   } = useContext(MyContext)
+  } = useContext(MyContext)
 
   let [loader, setLoader] = useState(null)
 
@@ -85,9 +86,18 @@ const TeacherLogin = () => {
     try {
 
 
-      let response = await axios.post(`${import.meta.env.VITE_backend_base_Url}/api/v1/TeacherRoutes/Login`, formData, { withCredentials: true })
+      // let response = await axios.post(`${import.meta.env.VITE_backend_base_Url}/api/v1/TeacherRoutes/Login`, formData, { withCredentials: true })
+
+      let method = "post"
+      let url = `/api/v1/TeacherRoutes/Login`
+      let data = formData
+
+      let response = await axiosReqFunc(method, url, data)
 
 
+
+
+      
       if (response.data) {
 
         setLoader(null)    // to make the loader hide
@@ -195,10 +205,10 @@ const TeacherLogin = () => {
 
 
 
-{/* Heading of Teacher lOgin page */}
+        {/* Heading of Teacher lOgin page */}
         <h1 className=' text-3xl text-blue-950 mb-10 font-bold text-center'>
           Teacher Login
-          </h1>
+        </h1>
 
 
 
@@ -213,7 +223,7 @@ const TeacherLogin = () => {
 
 
 
-{/* Form of Teacher Login page */}
+        {/* Form of Teacher Login page */}
         <form
           onSubmit={handleSubmit}
           className='flex flex-col gap-7 '>

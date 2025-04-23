@@ -5,7 +5,8 @@ import dbConnection from './db/dbConnection.js'
 dbConnection()
 import cors from 'cors'
 import donenv from 'dotenv'
-donenv.config()
+donenv.config() 
+import compression from 'compression'
 import path from 'path'
 import { fileURLToPath } from 'url';
 import TeacherRoutes from './routes/TeacherRoutes.js'
@@ -34,6 +35,7 @@ import AdminRoutes from './routes/AdminRoutes.js'
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
+// app.use(compression()) 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -73,7 +75,7 @@ app.use("/api/v1/TeacherRoutes", TeacherRoutes)
 app.use("/api/v1/StudentRoutes", StudentRoutes)
 app.use("/api/v1/ProductRoutes", ProductRoutes)
 
-
+ 
 
 
 
@@ -90,6 +92,19 @@ app.get('*', (req, res) => {
 
 
 
+
+
+
+
+
+
+
+
+  app.use((err, req, res, next) => {
+    console.error("Global Error Handler:", err.message)
+    res.status(500).json({ status: "error", msg: "Something went wrong!" })
+  })
+  
 
 
 

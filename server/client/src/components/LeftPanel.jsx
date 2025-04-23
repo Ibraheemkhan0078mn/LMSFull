@@ -4,6 +4,7 @@ import { gsap } from 'gsap'
 import MyContext from '../context api/MyContext'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -84,10 +85,25 @@ const LeftPanel = ({ mode }) => {
 
             let response;
             if (currentRenderedPage == "TeacherDashboard") {
-                response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/ProductRoutes/getTeacherCatagWiseCourses", { catagory: catagory }, { withCredentials: true })
-            } else {
-                response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/ProductRoutes/getCatagWiseCourses", { catagory: catagory }, { withCredentials: true })
+                // response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/ProductRoutes/getTeacherCatagWiseCourses", { catagory: catagory }, { withCredentials: true })
 
+                let method= "post";
+                let url= `/api/v1/ProductRoutes/getTeacherCatagWiseCourses`
+                let data= { catagory: catagory }
+
+                 response= await axiosReqFunc(method, url, data)
+
+
+            } else {
+                // response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/ProductRoutes/getCatagWiseCourses", { catagory: catagory }, { withCredentials: true })
+
+                let method= "post";
+                let url= `/api/v1/ProductRoutes/getCatagWiseCourses`
+                let data= { catagory: catagory }
+
+                 response= await axiosReqFunc(method, url, data)
+
+                
             }
 
 
@@ -281,4 +297,4 @@ const LeftPanel = ({ mode }) => {
     )
 }
 
-export default LeftPanel
+export default React.memo(LeftPanel)

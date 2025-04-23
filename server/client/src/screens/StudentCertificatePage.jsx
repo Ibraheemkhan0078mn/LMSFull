@@ -5,6 +5,7 @@ import MyContext from '../context api/MyContext.jsx'
 import { useNavigate } from 'react-router-dom'
 import Certificate from '../components/Certificate.jsx'
 import axios from 'axios'
+import { axiosReqFunc } from '../Api/axiosReqFunction.jsx'
 
 
 
@@ -45,7 +46,14 @@ const StudentCertificatePage = () => {
 
             async function getCertificates() {
 
-                let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/getLoggedInUserCertificate", { id: "7787" }, { withCredentials: true })
+                // let response = await axios.post(import.meta.env.VITE_backend_base_Url + "/api/v1/StudentRoutes/getLoggedInUserCertificate", { id: "7787" }, { withCredentials: true })
+
+                let method= "post"
+                let url = `/api/v1/StudentRoutes/getLoggedInUserCertificate`
+                let data= { id: "7787" }
+
+                let response= await axiosReqFunc(method, url ,data)
+
 
                 if (response.data) {
                     console.log(response.data)

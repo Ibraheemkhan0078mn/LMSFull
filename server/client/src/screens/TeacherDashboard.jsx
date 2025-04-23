@@ -7,6 +7,7 @@ import CoursesCardsContainer from '../components/CoursesCardsContainer.jsx'
 import MyContext from '../context api/MyContext'
 import CourseCreationForm from '../components/CourseCreationForm.jsx'
 import axios from 'axios'
+import { axiosReqFunc } from '../Api/axiosReqFunction.jsx'
 
 
 
@@ -72,7 +73,19 @@ const TeacherDashboard = () => {
         try {
             async function courseCardDataFetch() {
 
-                let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getTeacherRelatedCourses", { withCredentials: true })
+                // let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getTeacherRelatedCourses", { withCredentials: true })
+
+
+                let method = "get"
+                let url = `/api/v1/TeacherRoutes/getTeacherRelatedCourses`
+                let data = null
+
+                let response = await axiosReqFunc(method, url, data)
+
+
+
+
+
                 if (response.data) {
                     if (response.data.status == "success") {
                         setCourseCardDataArray(response.data.teacherRelatedCourses)

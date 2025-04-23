@@ -4,6 +4,7 @@ import { useState, useContext, useEffect } from 'react'
 import MyContext from '../context api/MyContext'
 import axios from 'axios'
 import Loader from './Loader'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -27,7 +28,7 @@ const QuestionCreationForm = () => {
 
     let navigate = useNavigate()
 
-    let [loader, setLoader]= useState(null)
+    let [loader, setLoader] = useState(null)
 
     let {
         setQuestionCreationFormVisibility,
@@ -37,14 +38,14 @@ const QuestionCreationForm = () => {
     } = useContext(MyContext)
 
 
-    let [question, setQuestion]= useState("")
-    let [option1, setOption1]= useState("")
-    let [option2, setOption2]= useState("")
-    let [option3, setOption3]= useState("")
-    let [option4, setOption4]= useState("")
-    let [correctOptionIndex, setCorrectOptionIndex]= useState("0")
+    let [question, setQuestion] = useState("")
+    let [option1, setOption1] = useState("")
+    let [option2, setOption2] = useState("")
+    let [option3, setOption3] = useState("")
+    let [option4, setOption4] = useState("")
+    let [correctOptionIndex, setCorrectOptionIndex] = useState("0")
 
-//  console.log(correctOptionIndex)
+    //  console.log(correctOptionIndex)
 
 
 
@@ -70,24 +71,31 @@ const QuestionCreationForm = () => {
 
             let formData;
 
-            if(currentClickedCourseData  &&  question  &&  question!=""  && option1  && option1!=""  &&  option2  &&  option2!==""   &&   option3   &&  option3!=""   &&   option4  && option4!=""  && correctOptionIndex ){
-              
-                formData={
+            if (currentClickedCourseData && question && question != "" && option1 && option1 != "" && option2 && option2 !== "" && option3 && option3 != "" && option4 && option4 != "" && correctOptionIndex) {
+
+                formData = {
                     question,
-                    optionArray:[option1,option2, option3, option4], 
+                    optionArray: [option1, option2, option3, option4],
                     correctOptionIndex,
-                    currentClickedCourseId:currentClickedCourseData._id
+                    currentClickedCourseId: currentClickedCourseData._id
                 }
 
-            }else{
+            } else {
                 alert("All fields are required")
             }
 
 
-            // console.log(formData)
-            // console.log(formData.optionArray[correctOptionIndex])
 
-            let response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/TeacherRoutes/quizQuestionCreation", formData,{withCredentials:true})
+
+            // let response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/TeacherRoutes/quizQuestionCreation", formData,{withCredentials:true})
+
+            let method = "post";
+            let url = `/api/v1/TeacherRoutes/quizQuestionCreation`
+            let data = formData
+
+            let response = await axiosReqFunc(method, url, data)
+
+
 
 
 
@@ -97,15 +105,15 @@ const QuestionCreationForm = () => {
                 setLoader(null) // to make the laoder hide
 
 
-                if(response.data.status=="success"){
+                if (response.data.status == "success") {
                     // console.log("successfully question is created")
                     setQuestionCreationFormVisibility("hide")
                     navigate("/TeacherQuizPage")
-                    console.log(response.data.quizQuestionsArray)   
+                    console.log(response.data.quizQuestionsArray)
                     setQuizQuestionArray(response.data.quizQuestionsArray)
-                }else if(response.data.status=="failed"){
+                } else if (response.data.status == "failed") {
                     alert(response.data.msg)
-                }else if (response.data.status=="error"){
+                } else if (response.data.status == "error") {
                     console.log(response.data)
                     alert(response.data.msg)
                 }
@@ -137,7 +145,7 @@ const QuestionCreationForm = () => {
 
 
 
-   
+
 
 
 
@@ -253,7 +261,7 @@ const QuestionCreationForm = () => {
                         className='custom_glassy_effect    min-h-10  w-full rounded-lg px-5 text-base outline-none border-none text-zinc-600 font-semibold pt-2'
                         name='lectureName'
                         value={question}
-                        onChange={(e)=>{setQuestion(e.target.value)}}
+                        onChange={(e) => { setQuestion(e.target.value) }}
                         required
                     />
 
@@ -290,7 +298,7 @@ const QuestionCreationForm = () => {
                             className='custom_glassy_effect    h-8 w-40 rounded-lg px-5 text-base outline-none border-none text-zinc-600 font-semibold'
                             name='lectureDiscription'
                             value={option1}
-                            onChange={(e)=>{setOption1(e.target.value)}}
+                            onChange={(e) => { setOption1(e.target.value) }}
                             required
                         />
 
@@ -311,7 +319,7 @@ const QuestionCreationForm = () => {
                             className='custom_glassy_effect    h-8 w-40 rounded-lg px-5 text-base outline-none border-none text-zinc-600 font-semibold'
                             name='lectureDiscription'
                             value={option2}
-                            onChange={(e)=>{setOption2(e.target.value)}}
+                            onChange={(e) => { setOption2(e.target.value) }}
                             required
                         />
 
@@ -333,7 +341,7 @@ const QuestionCreationForm = () => {
                             className='custom_glassy_effect    h-8 w-40 rounded-lg px-5 text-base outline-none border-none text-zinc-600 font-semibold'
                             name='lectureDiscription'
                             value={option3}
-                            onChange={(e)=>{setOption3(e.target.value)}}
+                            onChange={(e) => { setOption3(e.target.value) }}
                             required
                         />
 
@@ -358,7 +366,7 @@ const QuestionCreationForm = () => {
                             className='custom_glassy_effect    h-8 w-40 rounded-lg px-5 text-base outline-none border-none text-zinc-600 font-semibold'
                             name='lectureDiscription'
                             value={option4}
-                            onChange={(e)=>{setOption4(e.target.value)}}
+                            onChange={(e) => { setOption4(e.target.value) }}
                             required
                         />
 
@@ -391,20 +399,20 @@ const QuestionCreationForm = () => {
 
 
 
-{/* correct option start */}
+                {/* correct option start */}
 
-                <label 
-                className='h-max w-full flex gap-3 items-center justify-center pr-24'
-                htmlFor="">
+                <label
+                    className='h-max w-full flex gap-3 items-center justify-center pr-24'
+                    htmlFor="">
 
-                    Correct Answer: 
+                    Correct Answer:
 
-                    <select 
-                    value={correctOptionIndex}
-                    onChange={(e)=>{setCorrectOptionIndex(e.target.value)}}
-                    name="options" 
-                    id=""
-                    className='custom_glassy_effect    h-8 w-max rounded-lg px-5 text-base outline-none border-none text-zinc-600 font-semibold'
+                    <select
+                        value={correctOptionIndex}
+                        onChange={(e) => { setCorrectOptionIndex(e.target.value) }}
+                        name="options"
+                        id=""
+                        className='custom_glassy_effect    h-8 w-max rounded-lg px-5 text-base outline-none border-none text-zinc-600 font-semibold'
                     >
                         <option value="0">A</option>
                         <option value="1">B</option>
@@ -414,7 +422,7 @@ const QuestionCreationForm = () => {
                 </label>
 
 
-{/* correct option end */}
+                {/* correct option end */}
 
 
 
@@ -437,12 +445,12 @@ const QuestionCreationForm = () => {
 
 
                     {
-              loader ?
-                <div className="absolute right-[30%] top-3">
-                  <Loader hw={20} />
-                </div> :
-                null
-            }
+                        loader ?
+                            <div className="absolute right-[30%] top-3">
+                                <Loader hw={20} />
+                            </div> :
+                            null
+                    }
 
 
 

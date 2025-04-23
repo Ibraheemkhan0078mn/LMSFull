@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import MyContext from '../context api/MyContext'
 import axios from 'axios'
 import Loader from './Loader'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -31,8 +32,8 @@ const CourseCreationForm = () => {
 
 
     let { setCourseCreationFormVisibility,
-        setCourseCardDataArray ,
-     } = useContext(MyContext)
+        setCourseCardDataArray,
+    } = useContext(MyContext)
 
 
     let [loaderVisibility, setLoaderVisibility] = useState(null)
@@ -46,6 +47,26 @@ const CourseCreationForm = () => {
 
 
 
+
+
+    
+
+
+
+
+
+
+    
+    function handleChange(e) {
+        let { name, value } = e.target;
+        if (name == "courseImage") {
+            setFormData({ ...formData, [name]: e.target.files[0] })
+        } else {
+            setFormData({ ...formData, [name]: value })
+        }
+        console.log("handle check running... ", formData.courseImage)
+
+    }
 
 
 
@@ -72,7 +93,25 @@ const CourseCreationForm = () => {
                 fromDataToSend.append(key, formData[key])
             }
 
-            let response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/TeacherRoutes/createCourse", fromDataToSend, { withCredentials: true })
+
+            fromDataToSend.append("courseImage", formData.courseImage)
+
+
+            // for (let [key, val] of fromDataToSend.entries()) {
+            //     console.log(key, val);
+            //   }
+
+            
+
+
+            // let response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/TeacherRoutes/createCourse", fromDataToSend, { withCredentials: true })
+
+            let method = "post";
+            let url = `/api/v1/TeacherRoutes/createCourse`
+            let data = fromDataToSend
+            let isImage= true
+            let response = await axiosReqFunc(method, url, data, isImage)
+
 
             if (response.data) {
 
@@ -101,17 +140,6 @@ const CourseCreationForm = () => {
 
 
 
-
-
-
-    function handleChange(e) {
-        let { name, value } = e.target;
-        if (name == "courseImage") {
-            setFormData({ ...formData, [name]: e.target.files[0] })
-        } else {
-            setFormData({ ...formData, [name]: value })
-        }
-    }
 
 
 
@@ -360,4 +388,4 @@ const CourseCreationForm = () => {
     )
 }
 
-export default CourseCreationForm
+export default React.memo(CourseCreationForm)

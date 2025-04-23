@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import MyContext from '../context api/MyContext'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 const QuizQuestionDisplayComp = () => {
 
@@ -49,15 +50,26 @@ const QuizQuestionDisplayComp = () => {
     async function handleTestSubmition() {
         try {
 
-            let response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/TeacherRoutes/quizMarking",
+            // let response = await axios.post(import.meta.env.VITE_backend_base_Url+"/api/v1/TeacherRoutes/quizMarking",
+            //     {
+            //         submitedQuizArray: quizQuestionArrayToSend,
+            //         currentClickCourseId: currentClickedCourseData._id
+            //     },
+            //     { withCredentials: true }
+            // )
+
+
+            let response= await axiosReqFunc("post", `/api/v1/TeacherRoutes/quizMarking`,
                 {
                     submitedQuizArray: quizQuestionArrayToSend,
                     currentClickCourseId: currentClickedCourseData._id
-                },
-                { withCredentials: true }
+                }
             )
 
 
+
+
+            
             if (response.data) {
                 console.log(response.data)
                 if(response.data.status=="success" && response.data.createdCertificate){
@@ -358,4 +370,4 @@ const QuizQuestionDisplayComp = () => {
 
 
 
-export default QuizQuestionDisplayComp
+export default React.memo(QuizQuestionDisplayComp)

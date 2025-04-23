@@ -6,6 +6,7 @@ import bgcImage from '../assets/bgcImage6.jpeg'
 import LeftPanel from '../components/LeftPanel.jsx'
 import CoursesCardsContainer from '../components/CoursesCardsContainer.jsx'
 import MyContext from '../context api/MyContext'
+import { axiosReqFunc } from '../Api/axiosReqFunction.jsx'
 
 
 
@@ -50,7 +51,15 @@ const TeacherProfile = () => {
         try {
 
             async function fetchAllCourses() {
-                let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getAllCourses")
+                // let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getAllCourses")
+
+                let method = "get"
+                let url = `/api/v1/TeacherRoutes/getAllCourses`
+                let data = null
+                let response = await axiosReqFunc(method, url, data)
+
+
+
                 if (response.data) {
                     // console.log(response.data)
                     if (response.data.status == "success") {

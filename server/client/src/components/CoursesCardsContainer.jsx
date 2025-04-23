@@ -352,4 +352,4 @@ const CoursesCardsContainer = ({ mode, heading }) => {
 
 
 
-export default CoursesCardsContainer
+export default React.memo(CoursesCardsContainer)

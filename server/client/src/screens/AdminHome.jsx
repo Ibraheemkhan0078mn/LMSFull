@@ -4,6 +4,7 @@ import AdminNavbar from '../components/AdminNavbar'
 import CoursesCardsContainer from '../components/CoursesCardsContainer'
 import axios from 'axios'
 import MyContext from '../context api/MyContext'
+import { axiosReqFunc } from '../Api/axiosReqFunction'
 
 
 
@@ -73,8 +74,13 @@ const AdminHome = () => {
 
 
       async function fetchAllCourses() {
-        let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getAllCourses")
+        // let response = await axios.get(import.meta.env.VITE_backend_base_Url + "/api/v1/TeacherRoutes/getAllCourses")
 
+
+        let response= await axiosReqFunc("get", `/api/v1/TeacherRoutes/getAllCourses`, null)
+
+
+        
         if (response) {
           // console.log(response.data)
 
